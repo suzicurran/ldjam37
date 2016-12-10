@@ -8,13 +8,13 @@ class Game < Hasu::Window
 
   TILEDIMENSIONS = 32
 
-  def initialize(tiles_per_side = 30)
+  def initialize(tiles_per_side = 25)
     @tiles_per_side = tiles_per_side
     super(@tiles_per_side * TILEDIMENSIONS, @tiles_per_side * TILEDIMENSIONS)
   end
 
   def reset
-    @tile = Tile.new(0,0)
+    # @tile = Tile.new(0,0)
     self.caption = 'Capture the other base!'
     @game_tiles = []
     @tiles_per_side.times do |index_for_column|
@@ -29,7 +29,9 @@ class Game < Hasu::Window
   end
 
   def draw
-    @tile.draw
+    @game_tiles.each do |tile|
+      tile.draw
+    end
   end
 end
 

@@ -10,10 +10,6 @@ class Tile
   end
 
   def draw
-    @board_sprites[0].draw(0,0,0)
-    @board_sprites[1].draw(0,50,0)
-    @board_sprites[2].draw(0,150,0)
-    @board_sprites[3].draw(0,200,0)
-
+    @board_sprites[0].draw(@column_index*Game::TILEDIMENSIONS,@row_index*Game::TILEDIMENSIONS,0)
   end
 end
