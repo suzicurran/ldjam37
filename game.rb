@@ -1,23 +1,23 @@
 require 'hasu'
 require 'pry'
 
-Hasu.load './lib/Player.rb'
+Hasu.load './lib/GameConfig.rb'
+Hasu.load './lib/Position.rb'
 Hasu.load './lib/Tile.rb'
+Hasu.load './lib/Player.rb'
+
 
 class Game < Hasu::Window
 
-  TILE_DIMENSIONS = 32 # in px
-  TILES_PER_SIDE = 25
-
   def initialize
-    super(TILES_PER_SIDE * TILE_DIMENSIONS, TILES_PER_SIDE * TILE_DIMENSIONS)
+    super(GameConfig::GAME_TILES_PER_SIDE * GameConfig::GAME_TILE_DIMENSIONS, GameConfig::GAME_TILES_PER_SIDE * GameConfig::GAME_TILE_DIMENSIONS)
   end
 
   def reset
     self.caption = "Reach your opponent's home to win!"
     @game_tiles = []
-    TILES_PER_SIDE.times do |index_for_column|
-      TILES_PER_SIDE.times do |index_for_row|
+    GameConfig::GAME_TILES_PER_SIDE.times do |index_for_column|
+      GameConfig::GAME_TILES_PER_SIDE.times do |index_for_row|
         this_tile = Tile.new(index_for_column, index_for_row)
         @game_tiles << this_tile
       end

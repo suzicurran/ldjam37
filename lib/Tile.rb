@@ -6,12 +6,12 @@ class Tile
   PLAYER_2_TILE = 3
 
   def initialize(column_index, row_index)
-    @p1_base_position = {col: 1, row: 1}
-    @p2_base_position = {col: (Game::TILES_PER_SIDE - 2), row: (Game::TILES_PER_SIDE - 2)}
+    @p1_base_position = Position.new(1,1)
+    @p2_base_position = Position.new((GameConfig::GAME_TILES_PER_SIDE - 2), (GameConfig::GAME_TILES_PER_SIDE - 2))
     @column_index = column_index  # x value w/ index starting at 0
     @row_index = row_index # y value w/ index starting at 0
     path_to_tile_image = './Images/Tiles.png'
-    @board_sprites = Gosu::Image.load_tiles(path_to_tile_image, Game::TILE_DIMENSIONS, Game::TILE_DIMENSIONS)
+    @board_sprites = Gosu::Image.load_tiles(path_to_tile_image, GameConfig::GAME_TILE_DIMENSIONS, GameConfig::GAME_TILE_DIMENSIONS)
     @tile_color = GREY
     if is_a_wall?
       @tile_color = WALL
@@ -25,11 +25,11 @@ class Tile
   end
 
   def is_position?(position)
-    (@column_index == position[:col]) && (@row_index == position[:row])
+    (@column_index == position.col) && (@row_index == position.row)
   end
 
   def is_a_wall?
-    wall_locations = [0, (Game::TILES_PER_SIDE - 1)]
+    wall_locations = [0, (GameConfig::GAME_TILES_PER_SIDE - 1)]
     wall_locations.include?(@column_index) || wall_locations.include?(@row_index)
   end
 
@@ -38,6 +38,6 @@ class Tile
   end
 
   def draw
-    @board_sprites[@tile_color].draw(@column_index*Game::TILE_DIMENSIONS,@row_index*Game::TILE_DIMENSIONS,0)
+    @board_sprites[@tile_color].draw(@column_index*GameConfig::GAME_TILE_DIMENSIONS,@row_index*GameConfig::GAME_TILE_DIMENSIONS,0)
   end
 end
