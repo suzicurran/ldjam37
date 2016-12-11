@@ -8,7 +8,10 @@ class Player
   DOWN = 2
   LEFT = 3
 
-  def initialize(starting_position, goal_position, sprite_sheet_path, keybindings, game)
+  attr_reader :my_spells
+
+  def initialize(player_name, starting_position, goal_position, sprite_sheet_path, keybindings, tile_type)
+    @player_name = player_name
     @position = starting_position
     @goal_position = goal_position
     @my_sprites = Gosu::Image.load_tiles(sprite_sheet_path, GameConfig::PLAYER_TILE_WIDTH, GameConfig::PLAYER_TILE_HEIGHT)
@@ -17,14 +20,16 @@ class Player
     @down_sprites = @my_sprites[6,3]
     @left_sprites = @my_sprites[9,3]
     @keybindings = keybindings
-    @game = game
+    @tile_type = tile_type
     @next_move_in = 0
     @facing = DOWN
     @step_count = 0
+    @my_spells = []
   end
 
   def update
     move
+    fire
   end
 
   def self.starting_player_data
@@ -36,31 +41,49 @@ class Player
   end
 
   def movement_cooldown
-    @next_move_in = (@game.frame_count + 15)
+    @next_move_in = (Game.frame_count + 15)
+  end
+
+  def fire
+    if Gosu::button_down?(@keybindings[:right_shoot]) || Gosu::button_down?(@keybindings[:left_shoot])
+      @my_spells << Spell.new(@position, @facing, @tile_type)
+    end
   end
 
   def move
-    if @game.frame_count >= @next_move_in
+    if Game.frame_count >= @next_move_in
       if Gosu::button_down? @keybindings[:up]
-        @facing = UP
-        @position.row -= 1
+        if @facing == UP
+          @position.go(UP)
+          @step_count += 1
+        else
+          @facing = UP
+        end
         movement_cooldown
-        @step_count += 1
       elsif Gosu::button_down? @keybindings[:down]
-        @facing = DOWN
-        @position.row += 1
+        if @facing == DOWN
+          @position.go(DOWN)
+          @step_count += 1
+        else
+          @facing = DOWN
+        end
         movement_cooldown
-        @step_count += 1
       elsif Gosu::button_down? @keybindings[:left]
-        @facing = LEFT
-        @position.col -= 1
+        if @facing == LEFT
+          @position.go(LEFT)
+          @step_count += 1
+        else
+          @facing = LEFT
+        end
         movement_cooldown
-        @step_count += 1
       elsif Gosu::button_down? @keybindings[:right]
-        @facing = RIGHT
-        @position.col += 1
+        if @facing == RIGHT
+          @position.go(RIGHT)
+          @step_count += 1
+        else
+          @facing = RIGHT
+        end
         movement_cooldown
-        @step_count += 1
       end
     end
   end

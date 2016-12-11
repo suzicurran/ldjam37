@@ -10,19 +10,22 @@ Hasu.load './lib/Player.rb'
 
 class Game < Hasu::Window
 
-  attr_reader :frame_count
+  @@frame_count = 0
+  def self.frame_count
+    @@frame_count
+  end
 
   def initialize
     super(GameConfig::GAME_TILES_PER_SIDE * GameConfig::GAME_TILE_DIMENSIONS, GameConfig::GAME_TILES_PER_SIDE * GameConfig::GAME_TILE_DIMENSIONS)
   end
 
   def reset
-    @frame_count = 0
     self.caption = "Flip tiles to your color to reach your goal!"
     @top_right_position = Position.new(GameConfig::GAME_TILES_PER_SIDE-2,1)
     @bottom_left_position = Position.new(1, GameConfig::GAME_TILES_PER_SIDE - 2)
     @bottom_right_position = Position.new(GameConfig::GAME_TILES_PER_SIDE-2, GameConfig::GAME_TILES_PER_SIDE - 2)
     @top_left_position = Position.new(1,1)
+    @players = []
     #keybindings
     keybindings_1 = {
       up: Gosu::KbW,
@@ -42,26 +45,24 @@ class Game < Hasu::Window
     }
 
     @board = Board.new(@top_left_position, @bottom_right_position)
-    @p1 = Player.new( @bottom_right_position, @top_left_position, './Images/Characters/warrior_f.png', keybindings_1, self)
-    @p2 = Player.new( @top_left_position, @bottom_right_position, './Images/Characters/healer_f.png', keybindings_2, self)
+    @players << Player.new("Player 1", @bottom_right_position, @top_left_position, './Images/Characters/warrior_f.png', keybindings_1, Tile::PLAYER_1_TILE)
+    @players << Player.new("Player 2", @top_left_position, @bottom_right_position, './Images/Characters/healer_f.png', keybindings_2, Tile::PLAYER_2_TILE)
   end
 
   def update
-    @p1.update
-    @p2.update
+    @players.each{ |player| player.update }
   end
 
   def draw
-    if @p1.wins?
-      #yay
-    elsif @p2.wins?
-      #yay
+    winning_player = @players.select{ |player| player.wins? }[0]
+    if winning_player
+      #yay! congratulate the winning player
     else
       @board.draw
-      @p1.draw
-      @p2.draw
+      @players.each{ |player| player.draw }
     end
-    @frame_count += 1
+    @@frame_count += 1
+
   end
 end
 
