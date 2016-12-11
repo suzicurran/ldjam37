@@ -14,9 +14,9 @@ class Board
         if this_tile.is_a_wall?(wall_locations)
           this_tile.tile_color = Tile::WALL
         elsif this_tile.position == @p1_goal_position
-          this_tile.tile_color = Tile::PLAYER_2_GOAL
-        elsif this_tile.position == @p2_goal_position
           this_tile.tile_color = Tile::PLAYER_1_GOAL
+        elsif this_tile.position == @p2_goal_position
+          this_tile.tile_color = Tile::PLAYER_2_GOAL
         end
 
         if this_tile

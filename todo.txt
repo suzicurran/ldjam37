@@ -3,6 +3,7 @@ timer on firing
 credits after wins
 title screen
 don't go offscreen
+spell don't affect walls or bases
 X player orientation
 X player sprite animation
 you can only move on your own tiles

@@ -21,6 +21,7 @@ class Game < Hasu::Window
   end
 
   def reset
+    @winning_player = nil
     self.caption = "Flip tiles to your color to reach your goal!"
     @top_right_position = Position.new(1,GameConfig::GAME_TILES_PER_SIDE-2)
     @bottom_left_position = Position.new(GameConfig::GAME_TILES_PER_SIDE - 2, 1)
@@ -46,29 +47,36 @@ class Game < Hasu::Window
     }
 
     @board = Board.new(@top_left_position, @bottom_right_position)
-    @players << Player.new("Player 1", @bottom_right_position, @top_left_position, './Images/Characters/warrior_f.png', keybindings_1, Tile::PLAYER_1_TILE)
-    @players << Player.new("Player 2", @top_left_position, @bottom_right_position, './Images/Characters/healer_f.png', keybindings_2, Tile::PLAYER_2_TILE)
+    @players << Player.new("Player 1", @bottom_right_position, Tile::PLAYER_1_GOAL, './Images/Characters/warrior_f.png', keybindings_1, Tile::PLAYER_1_TILE)
+    @players << Player.new("Player 2", @top_left_position, Tile::PLAYER_2_GOAL, './Images/Characters/healer_f.png', keybindings_2, Tile::PLAYER_2_TILE)
   end
 
   def update
-    @players.each do |player|
-      player.update(@board.tiles)
-      player.my_spells.each_with_index do |spell, index|
-        this_tile = @board.tiles.find{|tile| tile.position == spell.position}
-        if this_tile.tile_color != spell.resulting_tile_type
-          this_tile.change_color(spell.resulting_tile_type)
-          player.my_spells.delete_at(index)
-        else
-          spell.position.go(spell.heading)
+    if @winning_player
+      #do nothing
+    else
+      @players.each do |player|
+        player.update(@board.tiles)
+        player.my_spells.each_with_index do |spell, index|
+          this_tile = @board.tiles.find{|tile| tile.position == spell.position}
+          if [Tile::WALL, Tile::PLAYER_1_GOAL, Tile::PLAYER_2_GOAL].include?(this_tile.tile_color)
+            player.my_spells.delete_at(index)
+          elsif spell.resulting_tile_type != this_tile.tile_color
+            this_tile.change_color(spell.resulting_tile_type)
+            player.my_spells.delete_at(index)
+          else
+            spell.position.go(spell.heading)
+          end
         end
       end
     end
   end
 
   def draw
-    winning_player = @players.select{ |player| player.wins? }[0]
-    if winning_player
-      #yay! congratulate the winning player
+    @winning_player = @players.select{ |player| player.winning }[0]
+    if @winning_player
+      puts "#{@winning_player.player_name} wins!"
+      #show credits
     else
       @board.draw
       @players.each{ |player| player.draw }

@@ -4,8 +4,8 @@ class Tile
   GREY = 1
   PLAYER_1_TILE = 2
   PLAYER_2_TILE = 3
-  PLAYER_2_GOAL = 4
-  PLAYER_1_GOAL = 5
+  PLAYER_1_GOAL = 4
+  PLAYER_2_GOAL = 5
 
   attr_accessor :tile_color, :position
 
