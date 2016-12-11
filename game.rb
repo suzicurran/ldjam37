@@ -23,6 +23,9 @@ class Game < Hasu::Window
   def reset
     @game_state = "title"
     @title_image = Gosu::Image.new("./Images/Tiles/TitleScreen.png")
+    @gameplay_song = Gosu::Song.new("./Audio/HHavok-intro-loop.wav")
+    @gameplay_song.play(true)
+    @gameplay_song.pause()
     @winning_player = nil
     self.caption = "Flip tiles to your color to reach your goal!"
     @top_right_position = Position.new(1,GameConfig::GAME_TILES_PER_SIDE-2)
@@ -56,10 +59,13 @@ class Game < Hasu::Window
   def update
     if @game_state == "title"
       if Gosu::button_down?(Gosu::KbReturn) || Gosu::button_down?(Gosu::KbEnter)
+        unless @gameplay_song.playing?
+          @gameplay_song.play(true)
+        end
         @game_state = "playing"
       end
     elsif @winning_player
-      #do nothing
+      @gameplay_song.pause
     else
       @players.each do |player|
         player.update(@board.tiles)
