@@ -22,8 +22,12 @@ class Game < Hasu::Window
         @game_tiles << this_tile
       end
     end
-    @p1 = Player.new(:p1)
-    @p2 = Player.new(:p2)
+    top_right_position = Position.new(GameConfig::GAME_TILES_PER_SIDE-2,1)
+    bottom_left_position = Position.new(1, GameConfig::GAME_TILES_PER_SIDE - 2)
+    bottom_right_position = Position.new(GameConfig::GAME_TILES_PER_SIDE-2, GameConfig::GAME_TILES_PER_SIDE - 2)
+    top_left_position = Position.new(1,1)
+    @p1 = Player.new( top_right_position, bottom_right_position, './Images/warrior_f.png')
+    @p2 = Player.new( bottom_left_position, top_left_position, './Images/healer_f.png')
   end
 
   def update
