@@ -1,0 +1,8 @@
+fire mechanics for flipping
+timer on firing
+credits after wins
+title screen
+don't go offscreen
+player orientation
+player sprite animation
+you can only move on your own tiles
