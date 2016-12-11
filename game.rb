@@ -21,6 +21,8 @@ class Game < Hasu::Window
   end
 
   def reset
+    @game_state = "title"
+    @title_image = Gosu::Image.new("./Images/Tiles/TitleScreen.png")
     @winning_player = nil
     self.caption = "Flip tiles to your color to reach your goal!"
     @top_right_position = Position.new(1,GameConfig::GAME_TILES_PER_SIDE-2)
@@ -52,7 +54,9 @@ class Game < Hasu::Window
   end
 
   def update
-    if @winning_player
+    if @game_state = "title"
+      #wait for KBenter
+    elsif @winning_player
       #do nothing
     else
       @players.each do |player|
@@ -73,16 +77,19 @@ class Game < Hasu::Window
   end
 
   def draw
-    @winning_player = @players.select{ |player| player.winning }[0]
-    if @winning_player
-      puts "#{@winning_player.player_name} wins!"
-      #show credits
+    if @game_state = "title"
+      @title_image.draw(0,0,5)
     else
-      @board.draw
-      @players.each{ |player| player.draw }
+      @winning_player = @players.select{ |player| player.winning }[0]
+      if @winning_player
+        puts "#{@winning_player.player_name} wins!"
+        #show credits
+      else
+        @board.draw
+        @players.each{ |player| player.draw }
+      end
+      @@frame_count += 1
     end
-    @@frame_count += 1
-
   end
 end
 
