@@ -1,6 +1,6 @@
 class Position
-  attr_accessor :row, :col
-  def initialize(row, col)
+  attr_accessor :col, :row
+  def initialize(col, row)
     @row = row
     @col = col
   end
@@ -14,5 +14,9 @@ class Position
     elsif heading == Player::LEFT
       @col -= 1
     end
+  end
+
+  def ==(other_thing)
+    @row == other_thing.row && @col == other_thing.col
   end
 end

@@ -7,22 +7,17 @@ class Tile
   PLAYER_2_GOAL = 4
   PLAYER_1_GOAL = 5
 
-  attr_accessor :tile_color
+  attr_accessor :tile_color, :position
 
-  def initialize(column_index, row_index)
-    @column_index = column_index  # x value w/ index starting at 0
-    @row_index = row_index # y value w/ index starting at 0
-    path_to_tile_image = './Images/Tiles/Tiles.png'
-    @board_sprites = Gosu::Image.load_tiles(path_to_tile_image, GameConfig::GAME_TILE_DIMENSIONS, GameConfig::GAME_TILE_DIMENSIONS)
+  @@board_sprites = Gosu::Image.load_tiles('./Images/Tiles/Tiles.png', GameConfig::GAME_TILE_DIMENSIONS, GameConfig::GAME_TILE_DIMENSIONS)
+
+  def initialize(position)
+    @position = position
     @tile_color = GREY
   end
 
-  def is_position?(position)
-    (@column_index == position.col) && (@row_index == position.row)
-  end
-
   def is_a_wall?(wall_locations)
-    wall_locations.include?(@column_index) || wall_locations.include?(@row_index)
+    wall_locations.include?(@position.col) || wall_locations.include?(@position.row)
   end
 
   def change_color(target_color)
@@ -30,6 +25,6 @@ class Tile
   end
 
   def draw
-    @board_sprites[@tile_color].draw(@column_index*GameConfig::GAME_TILE_DIMENSIONS,@row_index*GameConfig::GAME_TILE_DIMENSIONS,0)
+    @@board_sprites[@tile_color].draw(@position.col*GameConfig::GAME_TILE_DIMENSIONS,@position.row*GameConfig::GAME_TILE_DIMENSIONS,0)
   end
 end

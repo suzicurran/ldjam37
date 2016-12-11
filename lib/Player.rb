@@ -48,7 +48,7 @@ class Player
 
   def fire
     if Gosu::button_down?(@keybindings[:right_shoot]) || Gosu::button_down?(@keybindings[:left_shoot])
-      @my_spells << Spell.new(@position, @facing, @tile_type)
+      @my_spells << Spell.new(Position.new(@position.col, @position.row), @facing, @tile_type)
     end
   end
 

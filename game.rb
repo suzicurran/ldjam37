@@ -6,6 +6,7 @@ Hasu.load './lib/Position.rb'
 Hasu.load './lib/Tile.rb'
 Hasu.load './lib/Board.rb'
 Hasu.load './lib/Player.rb'
+Hasu.load './lib/Spell.rb'
 
 
 class Game < Hasu::Window
@@ -21,8 +22,8 @@ class Game < Hasu::Window
 
   def reset
     self.caption = "Flip tiles to your color to reach your goal!"
-    @top_right_position = Position.new(GameConfig::GAME_TILES_PER_SIDE-2,1)
-    @bottom_left_position = Position.new(1, GameConfig::GAME_TILES_PER_SIDE - 2)
+    @top_right_position = Position.new(1,GameConfig::GAME_TILES_PER_SIDE-2)
+    @bottom_left_position = Position.new(GameConfig::GAME_TILES_PER_SIDE - 2, 1)
     @bottom_right_position = Position.new(GameConfig::GAME_TILES_PER_SIDE-2, GameConfig::GAME_TILES_PER_SIDE - 2)
     @top_left_position = Position.new(1,1)
     @players = []
@@ -50,7 +51,18 @@ class Game < Hasu::Window
   end
 
   def update
-    @players.each{ |player| player.update }
+    @players.each do |player|
+      player.update
+      player.my_spells.each_with_index do |spell, index|
+        this_tile = @board.tiles.find{|tile| tile.position == spell.position}
+        if this_tile.tile_color != spell.resulting_tile_type
+          this_tile.change_color(spell.resulting_tile_type)
+          player.my_spells.delete_at(index)
+        else
+          spell.position.go(spell.heading)
+        end
+      end
+    end
   end
 
   def draw
