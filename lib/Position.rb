@@ -19,4 +19,8 @@ class Position
   def ==(other_thing)
     @row == other_thing.row && @col == other_thing.col
   end
+
+  def summary
+    "col: #{col}, row: #{row}"
+  end
 end

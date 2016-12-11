@@ -52,7 +52,7 @@ class Game < Hasu::Window
 
   def update
     @players.each do |player|
-      player.update
+      player.update(@board.tiles)
       player.my_spells.each_with_index do |spell, index|
         this_tile = @board.tiles.find{|tile| tile.position == spell.position}
         if this_tile.tile_color != spell.resulting_tile_type

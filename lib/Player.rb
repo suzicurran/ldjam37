@@ -27,9 +27,9 @@ class Player
     @my_spells = []
   end
 
-  def update
+  def update(tiles)
     if Game.frame_count >= @next_move_in
-      move
+      move(tiles)
     end
     fire
   end
@@ -52,12 +52,21 @@ class Player
     end
   end
 
-  def move
+  def potential_position
+    pos = Position.new(@position.col, @position.row)
+    pos.go(@facing)
+    pos
+  end
+
+  def move(tiles)
     @keybindings.keys[0,4].each do |direction|
       if Gosu::button_down? @keybindings[direction]
         if @facing == direction
-          @position.go(direction)
-          @step_count += 1
+          facing_tile = tiles.find{|tile| tile.position == potential_position}
+          if facing_tile.tile_color == @tile_type
+            @position.go(direction)
+            @step_count += 1
+          end
         else
           @facing = direction
         end
