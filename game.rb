@@ -54,8 +54,10 @@ class Game < Hasu::Window
   end
 
   def update
-    if @game_state = "title"
-      #wait for KBenter
+    if @game_state == "title"
+      if Gosu::button_down?(Gosu::KbReturn) || Gosu::button_down?(Gosu::KbEnter)
+        @game_state = "playing"
+      end
     elsif @winning_player
       #do nothing
     else
@@ -77,7 +79,7 @@ class Game < Hasu::Window
   end
 
   def draw
-    if @game_state = "title"
+    if @game_state == "title"
       @title_image.draw(0,0,5)
     else
       @winning_player = @players.select{ |player| player.winning }[0]
