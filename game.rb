@@ -4,6 +4,7 @@ require 'pry'
 Hasu.load './lib/GameConfig.rb'
 Hasu.load './lib/Position.rb'
 Hasu.load './lib/Tile.rb'
+Hasu.load './lib/Board.rb'
 Hasu.load './lib/Player.rb'
 
 
@@ -14,29 +15,21 @@ class Game < Hasu::Window
   end
 
   def reset
-    self.caption = "Reach your opponent's home to win!"
-    @game_tiles = []
-    GameConfig::GAME_TILES_PER_SIDE.times do |index_for_column|
-      GameConfig::GAME_TILES_PER_SIDE.times do |index_for_row|
-        this_tile = Tile.new(index_for_column, index_for_row)
-        @game_tiles << this_tile
-      end
-    end
-    top_right_position = Position.new(GameConfig::GAME_TILES_PER_SIDE-2,1)
-    bottom_left_position = Position.new(1, GameConfig::GAME_TILES_PER_SIDE - 2)
-    bottom_right_position = Position.new(GameConfig::GAME_TILES_PER_SIDE-2, GameConfig::GAME_TILES_PER_SIDE - 2)
-    top_left_position = Position.new(1,1)
-    @p1 = Player.new( top_right_position, bottom_right_position, './Images/warrior_f.png')
-    @p2 = Player.new( bottom_left_position, top_left_position, './Images/healer_f.png')
+    self.caption = "Spread your magic to reach your goal!"
+    @top_right_position = Position.new(GameConfig::GAME_TILES_PER_SIDE-2,1)
+    @bottom_left_position = Position.new(1, GameConfig::GAME_TILES_PER_SIDE - 2)
+    @bottom_right_position = Position.new(GameConfig::GAME_TILES_PER_SIDE-2, GameConfig::GAME_TILES_PER_SIDE - 2)
+    @top_left_position = Position.new(1,1)
+    @board = Board.new(@top_left_position, @bottom_right_position)
+    @p1 = Player.new( @bottom_right_position, @bottom_right_position, './Images/Characters/warrior_f.png')
+    @p2 = Player.new( @top_left_position, @top_left_position, './Images/Characters/healer_f.png')
   end
 
   def update
   end
 
   def draw
-    @game_tiles.each do |tile|
-      tile.draw
-    end
+    @board.draw
     @p1.draw
     @p2.draw
   end

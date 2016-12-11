@@ -4,32 +4,24 @@ class Tile
   GREY = 1
   PLAYER_1_TILE = 2
   PLAYER_2_TILE = 3
+  PLAYER_2_GOAL = 4
+  PLAYER_1_GOAL = 5
+
+  attr_accessor :tile_color
 
   def initialize(column_index, row_index)
-    @p1_base_position = Position.new(1,1)
-    @p2_base_position = Position.new((GameConfig::GAME_TILES_PER_SIDE - 2), (GameConfig::GAME_TILES_PER_SIDE - 2))
     @column_index = column_index  # x value w/ index starting at 0
     @row_index = row_index # y value w/ index starting at 0
-    path_to_tile_image = './Images/Tiles.png'
+    path_to_tile_image = './Images/Tiles/Tiles.png'
     @board_sprites = Gosu::Image.load_tiles(path_to_tile_image, GameConfig::GAME_TILE_DIMENSIONS, GameConfig::GAME_TILE_DIMENSIONS)
     @tile_color = GREY
-    if is_a_wall?
-      @tile_color = WALL
-    end
-    if is_position?(@p1_base_position)
-      @tile_color = PLAYER_1_TILE
-    end
-    if is_position?(@p2_base_position)
-      @tile_color = PLAYER_2_TILE
-    end
   end
 
   def is_position?(position)
     (@column_index == position.col) && (@row_index == position.row)
   end
 
-  def is_a_wall?
-    wall_locations = [0, (GameConfig::GAME_TILES_PER_SIDE - 1)]
+  def is_a_wall?(wall_locations)
     wall_locations.include?(@column_index) || wall_locations.include?(@row_index)
   end
 
