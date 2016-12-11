@@ -3,10 +3,10 @@ require 'pry'
 class Player
   MOVE_LIMIT = 10
 
-  UP = 0
-  RIGHT = 1
-  DOWN = 2
-  LEFT = 3
+  UP = :up
+  RIGHT = :right
+  DOWN = :down
+  LEFT = :left
 
   attr_reader :my_spells
 
@@ -28,7 +28,9 @@ class Player
   end
 
   def update
-    move
+    if Game.frame_count >= @next_move_in
+      move
+    end
     fire
   end
 
@@ -51,37 +53,13 @@ class Player
   end
 
   def move
-    if Game.frame_count >= @next_move_in
-      if Gosu::button_down? @keybindings[:up]
-        if @facing == UP
-          @position.go(UP)
+    @keybindings.keys[0,4].each do |direction|
+      if Gosu::button_down? @keybindings[direction]
+        if @facing == direction
+          @position.go(direction)
           @step_count += 1
         else
-          @facing = UP
-        end
-        movement_cooldown
-      elsif Gosu::button_down? @keybindings[:down]
-        if @facing == DOWN
-          @position.go(DOWN)
-          @step_count += 1
-        else
-          @facing = DOWN
-        end
-        movement_cooldown
-      elsif Gosu::button_down? @keybindings[:left]
-        if @facing == LEFT
-          @position.go(LEFT)
-          @step_count += 1
-        else
-          @facing = LEFT
-        end
-        movement_cooldown
-      elsif Gosu::button_down? @keybindings[:right]
-        if @facing == RIGHT
-          @position.go(RIGHT)
-          @step_count += 1
-        else
-          @facing = RIGHT
+          @facing = direction
         end
         movement_cooldown
       end
