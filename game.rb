@@ -52,8 +52,8 @@ class Game < Hasu::Window
     }
 
     @board = Board.new(@top_left_position, @bottom_right_position)
-    @players << Player.new("Player 1", @bottom_right_position, Tile::PLAYER_1_GOAL, './Images/Characters/warrior_f.png', keybindings_1, Tile::PLAYER_1_TILE)
-    @players << Player.new("Player 2", @top_left_position, Tile::PLAYER_2_GOAL, './Images/Characters/healer_f.png', keybindings_2, Tile::PLAYER_2_TILE)
+    @players << Player.new("Player 1", @bottom_right_position, Tile::PLAYER_1_GOAL, './Images/Characters/warrior_f.png', keybindings_1, Tile::PLAYER_1_TILE, "./Audio/Move.wav", 0.5)
+    @players << Player.new("Player 2", @top_left_position, Tile::PLAYER_2_GOAL, './Images/Characters/healer_f.png', keybindings_2, Tile::PLAYER_2_TILE, "./Audio/Move2.wav", 1)
   end
 
   def update
@@ -90,7 +90,6 @@ class Game < Hasu::Window
     else
       @winning_player = @players.select{ |player| player.winning }[0]
       if @winning_player
-        puts "#{@winning_player.player_name} wins!"
         #show credits
       else
         @board.draw

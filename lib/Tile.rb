@@ -2,8 +2,8 @@ class Tile
 
   WALL = 0
   GREY = 12
-  PLAYER_1_TILE = 10
-  PLAYER_2_TILE = 11
+  PLAYER_1_TILE = 14
+  PLAYER_2_TILE = 15
   PLAYER_1_GOAL = 4
   PLAYER_2_GOAL = 5
 

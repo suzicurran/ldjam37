@@ -1,7 +1,6 @@
 x fire mechanics for flipping
-timer on firing
 credits after wins
-title screen
+X title screen
 x don't go offscreen
 x spell don't affect walls or bases
 X player orientation
@@ -9,4 +8,4 @@ X player sprite animation
 x you can only move on your own tiles
 home tiles glow
 spell effects
-sound!!
+x sound!!

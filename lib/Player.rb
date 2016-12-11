@@ -10,7 +10,10 @@ class Player
 
   attr_reader :my_spells, :winning, :player_name
 
-  def initialize(player_name, starting_position, goal_tile, sprite_sheet_path, keybindings, tile_type)
+  def initialize(player_name, starting_position, goal_tile, sprite_sheet_path, keybindings, tile_type, spell_sound_path, spell_sound_vol)
+    @spell_sound = Gosu::Sample.new(spell_sound_path)
+    @spell_sound_vol = spell_sound_vol
+    @invalid_action_sound = Gosu::Sample.new("./Audio/InvalidAction.wav")
     @winning = false
     @player_name = player_name
     @position = starting_position
@@ -45,6 +48,7 @@ class Player
 
   def fire
     if Gosu::button_down?(@keybindings[:right_shoot]) || Gosu::button_down?(@keybindings[:left_shoot])
+      @spell_sound.play(@spell_sound_vol)
       @my_spells << Spell.new(Position.new(potential_position.col, potential_position.row), @facing, @tile_type)
     end
   end
@@ -67,6 +71,8 @@ class Player
               @winning = true
             end
             @step_count += 1
+          else
+            @invalid_action_sound.play
           end
         else
           @facing = direction
