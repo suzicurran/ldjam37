@@ -1,11 +1,15 @@
+
+$LOAD_PATH.unshift File.dirname(__FILE__)
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__), "lib")
+
 require 'gosu'
-require './lib/GameConfig.rb'
-require './lib/Position.rb'
-require './lib/Animation.rb'
-require './lib/Tile.rb'
-require './lib/Board.rb'
-require './lib/Player.rb'
-require './lib/Spell.rb'
+require 'GameConfig'
+require 'Position'
+require 'Animation'
+require 'Tile'
+require 'Board'
+require 'Player'
+require 'Spell'
 
 class Game < Gosu::Window
 
