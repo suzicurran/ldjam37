@@ -22,7 +22,8 @@ class Game < Gosu::Window
   def reset
     @game_state = "title"
     @title_ani = Animation.new("./Images/Tiles/TitleAnimated-525x268.png", 525, 268, 2, 136, 115, 6)
-    #@title_image = Gosu::Image.new("./Images/Tiles/TitleScreenSquareV2.png")
+    @frame_ani = Animation.new("./Images/Tiles/TitleScreenFrame.png", 800, 800, 2, 0, 0, 4)
+    @controls_ani = Animation.new("./Images/Tiles/ControlsLarge.png", 640, 192, 2, 85, 600, 5)
     @p1_credits_image = Gosu::Image.new("./Images/Tiles/Player1Credits.png")
     @p2_credits_image = Gosu::Image.new("./Images/Tiles/Player2Credits.png")
     @gameplay_song = Gosu::Song.new("./Audio/HHavok-intro-loop.wav")
@@ -61,6 +62,8 @@ class Game < Gosu::Window
   def update
     if @game_state == "title"
       @title_ani.update
+      @frame_ani.update
+      @controls_ani.update
       if Gosu::button_down?(Gosu::KbReturn) || Gosu::button_down?(Gosu::KbEnter)
         unless @gameplay_song.playing?
           @gameplay_song.play(true)
@@ -93,6 +96,8 @@ class Game < Gosu::Window
   def draw
     if @game_state == "title"
       @title_ani.draw
+      @frame_ani.draw
+      @controls_ani.draw
     else
       @winning_player = @players.select{ |player| player.winning }[0]
       if @winning_player
