@@ -1,6 +1,7 @@
 require 'gosu'
 require './lib/GameConfig.rb'
 require './lib/Position.rb'
+require './lib/Animation.rb'
 require './lib/Tile.rb'
 require './lib/Board.rb'
 require './lib/Player.rb'
@@ -20,7 +21,8 @@ class Game < Gosu::Window
 
   def reset
     @game_state = "title"
-    @title_image = Gosu::Image.new("./Images/Tiles/TitleScreenSquare.png")
+    @title_ani = Animation.new("./Images/Tiles/TitleAnimated-525x268.png", 525, 268, 2, 136, 115, 6)
+    #@title_image = Gosu::Image.new("./Images/Tiles/TitleScreenSquareV2.png")
     @p1_credits_image = Gosu::Image.new("./Images/Tiles/Player1Credits.png")
     @p2_credits_image = Gosu::Image.new("./Images/Tiles/Player2Credits.png")
     @gameplay_song = Gosu::Song.new("./Audio/HHavok-intro-loop.wav")
@@ -58,6 +60,7 @@ class Game < Gosu::Window
 
   def update
     if @game_state == "title"
+      @title_ani.update
       if Gosu::button_down?(Gosu::KbReturn) || Gosu::button_down?(Gosu::KbEnter)
         unless @gameplay_song.playing?
           @gameplay_song.play(true)
@@ -66,7 +69,7 @@ class Game < Gosu::Window
       end
     elsif @winning_player
       @gameplay_song.pause
-      if Gosu::button_down?(Gosu::KbR)
+      if Gosu::button_down?(Gosu::KbB)
         reset
       end
     else
@@ -89,7 +92,7 @@ class Game < Gosu::Window
 
   def draw
     if @game_state == "title"
-      @title_image.draw(0,0,5)
+      @title_ani.draw
     else
       @winning_player = @players.select{ |player| player.winning }[0]
       if @winning_player
@@ -102,8 +105,8 @@ class Game < Gosu::Window
         @board.draw
         @players.each{ |player| player.draw }
       end
-      @@frame_count += 1
     end
+    @@frame_count += 1
   end
 end
 
