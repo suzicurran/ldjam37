@@ -22,7 +22,9 @@ class Game < Hasu::Window
 
   def reset
     @game_state = "title"
-    @title_image = Gosu::Image.new("./Images/Tiles/TitleScreen.png")
+    @title_image = Gosu::Image.new("./Images/Tiles/TitleScreenSquare.png")
+    @p1_credits_image = Gosu::Image.new("./Images/Tiles/Player1Credits.png")
+    @p2_credits_image = Gosu::Image.new("./Images/Tiles/Player2Credits.png")
     @gameplay_song = Gosu::Song.new("./Audio/HHavok-intro-loop.wav")
     @gameplay_song.play(true)
     @gameplay_song.pause()
@@ -90,7 +92,11 @@ class Game < Hasu::Window
     else
       @winning_player = @players.select{ |player| player.winning }[0]
       if @winning_player
-        #show credits
+        if @winning_player.player_name == "Player 1"
+          @p1_credits_image.draw(0,0,5)
+        elsif @winning_player.player_name == "Player 2"
+          @p2_credits_image.draw(0,0,5)
+        end
       else
         @board.draw
         @players.each{ |player| player.draw }
