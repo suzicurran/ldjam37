@@ -1,7 +1,0 @@
-class GameConfig
-  GAME_TILE_DIMENSIONS = 32 #in px
-  GAME_TILES_PER_SIDE = 25
-  PLAYER_TILE_WIDTH = 32
-  PLAYER_TILE_HEIGHT = 36
-  PLAYER_TILE_OFFSET = 4 #in px, y cood
-end
