@@ -9,4 +9,4 @@ x you can only move on your own tiles
 x home tiles glow
 spell effects
 x sound!!
-readme
+x readme w/ build links
