@@ -23,7 +23,7 @@ class Game < Gosu::Window
     @game_state = "title"
     @title_ani = Animation.new("./Images/Tiles/TitleAnimated.png", 525, 268, 2)
     @frame_ani = Animation.new("./Images/Tiles/TitleScreenFrame.png", 800, 800, 2)
-    @controls_ani = Animation.new("./Images/Tiles/ControlsLarge.png", 640, 192, 2)
+    @controls_ani = Animation.new("./Images/Tiles/ControlsLarge.png", 660, 192, 2)
     @p1_credits_image = Gosu::Image.new("./Images/Tiles/Player1Credits.png")
     @p2_credits_image = Gosu::Image.new("./Images/Tiles/Player2Credits.png")
     @gameplay_song = Gosu::Song.new("./Audio/HHavok-intro-loop.wav")
