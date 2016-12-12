@@ -1,15 +1,13 @@
-require 'hasu'
-require 'pry'
-
-Hasu.load './lib/GameConfig.rb'
-Hasu.load './lib/Position.rb'
-Hasu.load './lib/Tile.rb'
-Hasu.load './lib/Board.rb'
-Hasu.load './lib/Player.rb'
-Hasu.load './lib/Spell.rb'
+require 'gosu'
+require './lib/GameConfig.rb'
+require './lib/Position.rb'
+require './lib/Tile.rb'
+require './lib/Board.rb'
+require './lib/Player.rb'
+require './lib/Spell.rb'
 
 
-class Game < Hasu::Window
+class Game < Gosu::Window
 
   @@frame_count = 0
   def self.frame_count
@@ -18,6 +16,7 @@ class Game < Hasu::Window
 
   def initialize
     super(GameConfig::GAME_TILES_PER_SIDE * GameConfig::GAME_TILE_DIMENSIONS, GameConfig::GAME_TILES_PER_SIDE * GameConfig::GAME_TILE_DIMENSIONS)
+    reset
   end
 
   def reset
@@ -68,6 +67,9 @@ class Game < Hasu::Window
       end
     elsif @winning_player
       @gameplay_song.pause
+      if Gosu::button_down?(Gosu::KbR)
+        reset
+      end
     else
       @players.each do |player|
         player.update(@board.tiles)
@@ -106,4 +108,4 @@ class Game < Hasu::Window
   end
 end
 
-Game.run
+Game.new.show
