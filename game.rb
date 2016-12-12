@@ -21,7 +21,7 @@ class Game < Gosu::Window
 
   def reset
     @game_state = "title"
-    @title_ani = Animation.new("./Images/Tiles/TitleAnimated-525x268.png", 525, 268, 2)
+    @title_ani = Animation.new("./Images/Tiles/TitleAnimated.png", 525, 268, 2)
     @frame_ani = Animation.new("./Images/Tiles/TitleScreenFrame.png", 800, 800, 2)
     @controls_ani = Animation.new("./Images/Tiles/ControlsLarge.png", 640, 192, 2)
     @p1_credits_image = Gosu::Image.new("./Images/Tiles/Player1Credits.png")
@@ -98,7 +98,7 @@ class Game < Gosu::Window
     if @game_state == "title"
       @title_ani.draw(136, 115, 6)
       @frame_ani.draw(0, 0, 4)
-      @controls_ani.draw(85, 600, 5)
+      @controls_ani.draw(70, 600, 5)
     else
       @winning_player = @players.select{ |player| player.winning }[0]
       if @winning_player
