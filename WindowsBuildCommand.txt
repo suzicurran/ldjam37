@@ -1,0 +1,3 @@
+ocra game.rb lib\* Images\**\*.png Audio\*.wav --windows --chdir-first --icon Images\cc.iconset\icon_512x512.ico --en-enc
+
+(Will result in a portable Game.exe)

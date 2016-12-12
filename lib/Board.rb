@@ -26,6 +26,12 @@ class Board
     end
   end
 
+  def update
+    @tiles.each do |tile|
+      tile.update
+    end
+  end
+
   def draw
     @tiles.each do |tile|
       tile.draw
