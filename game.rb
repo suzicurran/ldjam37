@@ -6,7 +6,6 @@ require './lib/Board.rb'
 require './lib/Player.rb'
 require './lib/Spell.rb'
 
-
 class Game < Gosu::Window
 
   @@frame_count = 0

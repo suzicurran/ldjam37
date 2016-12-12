@@ -1,5 +1,3 @@
-require 'pry'
-
 class Player
   MOVE_LIMIT = 10
 
