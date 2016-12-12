@@ -21,9 +21,9 @@ class Game < Gosu::Window
 
   def reset
     @game_state = "title"
-    @title_ani = Animation.new("./Images/Tiles/TitleAnimated-525x268.png", 525, 268, 2, 136, 115, 6)
-    @frame_ani = Animation.new("./Images/Tiles/TitleScreenFrame.png", 800, 800, 2, 0, 0, 4)
-    @controls_ani = Animation.new("./Images/Tiles/ControlsLarge.png", 640, 192, 2, 85, 600, 5)
+    @title_ani = Animation.new("./Images/Tiles/TitleAnimated-525x268.png", 525, 268, 2)
+    @frame_ani = Animation.new("./Images/Tiles/TitleScreenFrame.png", 800, 800, 2)
+    @controls_ani = Animation.new("./Images/Tiles/ControlsLarge.png", 640, 192, 2)
     @p1_credits_image = Gosu::Image.new("./Images/Tiles/Player1Credits.png")
     @p2_credits_image = Gosu::Image.new("./Images/Tiles/Player2Credits.png")
     @gameplay_song = Gosu::Song.new("./Audio/HHavok-intro-loop.wav")
@@ -76,6 +76,7 @@ class Game < Gosu::Window
         reset
       end
     else
+      @board.update
       @players.each do |player|
         player.update(@board.tiles)
         player.my_spells.each_with_index do |spell, index|
@@ -95,9 +96,9 @@ class Game < Gosu::Window
 
   def draw
     if @game_state == "title"
-      @title_ani.draw
-      @frame_ani.draw
-      @controls_ani.draw
+      @title_ani.draw(136, 115, 6)
+      @frame_ani.draw(0, 0, 4)
+      @controls_ani.draw(85, 600, 5)
     else
       @winning_player = @players.select{ |player| player.winning }[0]
       if @winning_player
