@@ -21,9 +21,9 @@ class Game < Gosu::Window
 
   def reset
     @game_state = "title"
-    @title_ani = Animation.new("./Images/Tiles/TitleAnimated-525x268.png", 525, 268, 2, 136, 115, 6)
+    @title_ani = Animation.new("./Images/Tiles/TitleAnimated.png", 525, 268, 2, 136, 115, 6)
     @frame_ani = Animation.new("./Images/Tiles/TitleScreenFrame.png", 800, 800, 2, 0, 0, 4)
-    @controls_ani = Animation.new("./Images/Tiles/ControlsLarge.png", 640, 192, 2, 85, 600, 5)
+    @controls_ani = Animation.new("./Images/Tiles/ControlsLarge.png", 660, 192, 2, 70, 600, 5)
     @p1_credits_image = Gosu::Image.new("./Images/Tiles/Player1Credits.png")
     @p2_credits_image = Gosu::Image.new("./Images/Tiles/Player2Credits.png")
     @gameplay_song = Gosu::Song.new("./Audio/HHavok-intro-loop.wav")

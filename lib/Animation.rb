@@ -1,4 +1,3 @@
-require 'pry'
 class Animation
   def initialize(sprite_sheet_path, width, height, fps, x, y, z, sprite_sheet_frames = (0..-1))
     @fps = fps
