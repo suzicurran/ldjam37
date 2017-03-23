@@ -4,5 +4,5 @@
 
 Current builds:
 
-* [Windows](./Builds/game.exe)
-* [macOS](./Builds/CrazyColorCasters.zip)
+* [Windows](https://github.com/suzicurran/ldjam37/raw/master/Builds/game.exe)
+* [macOS](https://github.com/suzicurran/ldjam37/raw/master/Builds/CrazyColorCasters.zip)
