@@ -9,13 +9,12 @@ class Tile
   attr_accessor :tile_color, :position
 
   @@board_sprites = Gosu::Image.load_tiles('./Images/Tiles/Tiles.png', GameConfig::GAME_TILE_DIMENSIONS, GameConfig::GAME_TILE_DIMENSIONS)
-  @@p1_goal_tile_ani = Animation.new('./Images/Tiles/Tiles.png', GameConfig::GAME_TILE_DIMENSIONS, GameConfig::GAME_TILE_DIMENSIONS, 5, [4,6,8])
-  @@p2_goal_tile_ani =Animation.new('./Images/Tiles/Tiles.png', GameConfig::GAME_TILE_DIMENSIONS, GameConfig::GAME_TILE_DIMENSIONS, 5, [5,7,9])
+  @@p1_goal_tile_ani = Animation.new('./Images/Tiles/Tiles.png', GameConfig::GAME_TILE_DIMENSIONS, GameConfig::GAME_TILE_DIMENSIONS, 3, [2,8,6,4,6,8,2])
+  @@p2_goal_tile_ani =Animation.new('./Images/Tiles/Tiles.png', GameConfig::GAME_TILE_DIMENSIONS, GameConfig::GAME_TILE_DIMENSIONS, 3, [3,9,7,5])
 
   def initialize(position)
     @position = position
     @tile_color = GREY
-
   end
 
   def is_a_wall?(wall_locations)
